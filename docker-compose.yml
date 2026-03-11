@@ -1,0 +1,93 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: fullstack-db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=orders_db
+    volumes:
+      - ./backend/database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+      - ./backend/database/seed.sql:/docker-entrypoint-initdb.d/02-seed.sql:ro
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - fullstack-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d orders_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./backend/Dockerfile
+      target: development
+    container_name: fullstack-backend
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - FRONTEND_URL=http://localhost:5173
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/orders_db
+    volumes:
+      - ./backend/src:/app/src
+      - ./types:/types
+      - backend_node_modules:/app/node_modules
+    networks:
+      - fullstack-network
+    healthcheck:
+      test: ["CMD", "node", "-e", "require('http').get('http://localhost:3000/health', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: .
+      dockerfile: ./frontend/Dockerfile
+      target: development
+    container_name: fullstack-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_URL=http://localhost:3000
+    volumes:
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/index.html:/app/index.html
+      - ./frontend/vite.config.ts:/app/vite.config.ts
+      - ./frontend/tsconfig.json:/app/tsconfig.json
+      - ./frontend/tsconfig.app.json:/app/tsconfig.app.json
+      - ./frontend/tsconfig.node.json:/app/tsconfig.node.json
+      - ./types:/types
+      - frontend_node_modules:/app/node_modules
+    networks:
+      - fullstack-network
+    stdin_open: true
+    tty: true
+
+networks:
+  fullstack-network:
+    driver: bridge
+    name: fullstack-network
+
+volumes:
+  postgres_data:
+    name: fullstack-postgres-data
+  backend_node_modules:
+    name: fullstack-backend-node-modules
+  frontend_node_modules:
+    name: fullstack-frontend-node-modules
