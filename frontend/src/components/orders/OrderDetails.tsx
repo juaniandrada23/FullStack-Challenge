@@ -54,10 +54,10 @@ export const OrderDetails = ({ order }: OrderDetailsProps) => {
     }).format(date);
   };
 
-  const DetailCard = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
-    <div className="group bg-white rounded-xl border border-neutral-200 p-4 sm:p-5 hover:border-neutral-300 hover:shadow-md transition-all duration-200">
+  const DetailCard = ({ icon, label, value, accent = false }: { icon: React.ReactNode; label: string; value: string; accent?: boolean }) => (
+    <div className="group bg-white rounded-xl border border-neutral-200/80 p-4 sm:p-5 hover:border-neutral-300 hover:shadow-md transition-all duration-200">
       <div className="flex items-center gap-2.5 mb-2.5">
-        <div className="w-8 h-8 rounded-lg bg-neutral-950 flex items-center justify-center flex-shrink-0">
+        <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${accent ? 'bg-accent-600' : 'bg-neutral-900'}`}>
           {icon}
         </div>
         <p className="text-[10px] sm:text-[11px] font-bold text-neutral-400 uppercase tracking-widest">{label}</p>
@@ -85,6 +85,7 @@ export const OrderDetails = ({ order }: OrderDetailsProps) => {
           icon={<MdPerson className="w-4 h-4 text-white" />}
           label="Cliente"
           value={order.customer_name}
+          accent
         />
         <DetailCard
           icon={<MdInventory className="w-4 h-4 text-white" />}

@@ -19,7 +19,6 @@
     "api"
   ],
   "author": "Juan Ignacio Andrada Cabo",
-  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

@@ -18,14 +18,14 @@ export const ConfirmDialog = ({
   const getIconByVariant = () => {
     if (variant === 'danger') {
       return (
-        <div className="w-12 h-12 rounded-full bg-red-50 flex items-center justify-center ring-1 ring-red-100">
-          <MdWarning className="w-6 h-6 text-red-500" />
+        <div className="w-14 h-14 rounded-2xl bg-red-50 flex items-center justify-center ring-1 ring-red-100 shadow-sm">
+          <MdWarning className="w-7 h-7 text-red-500" />
         </div>
       );
     }
     return (
-      <div className="w-12 h-12 rounded-full bg-neutral-100 flex items-center justify-center ring-1 ring-neutral-200">
-        <MdInfo className="w-6 h-6 text-neutral-600" />
+      <div className="w-14 h-14 rounded-2xl bg-neutral-100 flex items-center justify-center ring-1 ring-neutral-200 shadow-sm">
+        <MdInfo className="w-7 h-7 text-neutral-600" />
       </div>
     );
   };

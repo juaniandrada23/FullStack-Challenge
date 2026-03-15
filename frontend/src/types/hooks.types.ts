@@ -5,14 +5,11 @@ export interface UseOrdersResult {
   loading: boolean;
   error: string | null;
   page: number;
-  pageSize: number;
-  total: number;
   totalPages: number;
   statusFilter: OrderStatus | '';
   fetchOrders: () => Promise<void>;
   nextPage: () => void;
   previousPage: () => void;
-  setPage: (page: number) => void;
   setStatusFilter: (status: OrderStatus | '') => void;
 }
 

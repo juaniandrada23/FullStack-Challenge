@@ -2,7 +2,7 @@ import type { Toast } from './toast.types';
 import type { OrderStatus } from '@shared/types';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'danger' | 'submit';
+  variant?: 'primary' | 'secondary' | 'danger' | 'submit' | 'accent';
   children: React.ReactNode;
 }
 

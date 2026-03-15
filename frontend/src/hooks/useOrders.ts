@@ -9,8 +9,6 @@ export const useOrders = (initialPage = 1, initialPageSize = 10): UseOrdersResul
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(initialPage);
-  const [pageSize] = useState(initialPageSize);
-  const [total, setTotal] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [statusFilter, setStatusFilter] = useState<OrderStatus | ''>('');
   const { showToast } = useToast();
@@ -22,7 +20,7 @@ export const useOrders = (initialPage = 1, initialPageSize = 10): UseOrdersResul
     try {
       const params: PaginationParams = { 
         page, 
-        page_size: pageSize,
+        page_size: initialPageSize,
       };
 
       if (statusFilter) {
@@ -32,7 +30,6 @@ export const useOrders = (initialPage = 1, initialPageSize = 10): UseOrdersResul
       const response = await orderService.getAllOrders(params);
       
       setOrders(response.data);
-      setTotal(response.pagination.total);
       setTotalPages(response.pagination.total_pages);
     } catch (err) {
       const msg = err instanceof Error ? err.message : 'Error al cargar las órdenes';
@@ -41,7 +38,7 @@ export const useOrders = (initialPage = 1, initialPageSize = 10): UseOrdersResul
     } finally {
       setLoading(false);
     }
-  }, [page, pageSize, statusFilter, showToast]);
+  }, [page, initialPageSize, statusFilter, showToast]);
 
   useEffect(() => {
     fetchOrders();
@@ -69,14 +66,11 @@ export const useOrders = (initialPage = 1, initialPageSize = 10): UseOrdersResul
     loading,
     error,
     page,
-    pageSize,
-    total,
     totalPages,
     statusFilter,
     fetchOrders,
     nextPage,
     previousPage,
-    setPage,
     setStatusFilter: handleSetStatusFilter,
   };
 };

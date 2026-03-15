@@ -6,8 +6,9 @@ export const Button = ({ variant = 'primary', children, className = '', ...props
   const variantStyles = {
     primary: 'bg-neutral-950 text-white border-neutral-950 hover:bg-neutral-800 focus-visible:ring-neutral-950',
     secondary: 'bg-white text-neutral-700 border-neutral-300 hover:bg-neutral-50 hover:border-neutral-400 focus-visible:ring-neutral-400 shadow-sm',
-    danger: 'bg-neutral-950 text-white border-neutral-950 hover:bg-red-600 hover:border-red-600 focus-visible:ring-red-500',
-    submit: 'bg-neutral-900 text-white border-neutral-900 hover:bg-neutral-700 focus-visible:ring-neutral-950',
+    danger: 'bg-red-600 text-white border-red-600 hover:bg-red-700 hover:border-red-700 focus-visible:ring-red-500',
+    submit: 'bg-accent-600 text-white border-accent-600 hover:bg-accent-700 hover:border-accent-700 focus-visible:ring-accent-500 shadow-sm shadow-accent-600/20',
+    accent: 'bg-accent-600 text-white border-accent-600 hover:bg-accent-700 hover:border-accent-700 focus-visible:ring-accent-500',
   };
 
   return (

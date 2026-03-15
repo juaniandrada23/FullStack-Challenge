@@ -5,7 +5,7 @@ import { ToastProvider } from "./providers/ToastProvider";
 const App = () => {
   return (
     <ToastProvider>
-      <div className="min-h-screen bg-neutral-50 flex flex-col font-sans">
+      <div className="min-h-screen bg-[#f8fafc] flex flex-col font-sans">
         <main className="flex-1">
           <OrderList />
         </main>

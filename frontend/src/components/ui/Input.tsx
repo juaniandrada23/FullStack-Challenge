@@ -7,8 +7,8 @@ export const Input = ({ label, error, className = '', ...props }: InputProps) =>
         {label}
       </label>
       <input
-        className={`px-3.5 py-2.5 border rounded-lg text-sm text-neutral-900 placeholder:text-neutral-400 bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-neutral-950 focus:border-neutral-950 ${
-          error ? 'border-red-400' : 'border-neutral-300 hover:border-neutral-400'
+        className={`px-3.5 py-2.5 border rounded-xl text-sm text-neutral-900 placeholder:text-neutral-400 bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 ${
+          error ? 'border-red-400 focus:ring-red-500/20 focus:border-red-500' : 'border-neutral-300 hover:border-neutral-400'
         } ${className}`}
         {...props}
       />
